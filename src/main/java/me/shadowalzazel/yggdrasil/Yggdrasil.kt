@@ -1,6 +1,7 @@
 package me.shadowalzazel.yggdrasil
 
 import me.shadowalzazel.yggdrasil.commands.admin.GetCookieString
+import me.shadowalzazel.yggdrasil.commands.admin.SaveInventoryCookies
 import me.shadowalzazel.yggdrasil.commands.admin.SetCookieString
 import me.shadowalzazel.yggdrasil.commands.admin.TransferPlayer
 import me.shadowalzazel.yggdrasil.listeners.LoginManager
@@ -47,7 +48,8 @@ class Yggdrasil : JavaPlugin() {
         val commandMap = mapOf(
             "get_cookie_string" to GetCookieString,
             "set_cookie_string" to SetCookieString,
-            "transfer_player" to TransferPlayer)
+            "transfer_player" to TransferPlayer,
+            "save_inventory_cookies" to SaveInventoryCookies)
         commandMap.forEach { getCommand(it.key)?.setExecutor(it.value) }
 
         // Hello World!

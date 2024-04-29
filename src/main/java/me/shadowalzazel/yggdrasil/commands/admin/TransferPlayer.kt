@@ -20,13 +20,13 @@ object TransferPlayer : CommandExecutor {
         val host = args[1]
         val port = args[2].toInt()
         if (port > 25566) return false
-        println("Starting Transfer to server [$host:$port] for $name")
+        println("Starting Transfer to server [$host:$port] for [$name]")
         try {
             sender.transfer(host, port)
             return true
         }
         catch (except: IllegalStateException) {
-            println("Failed to Transfer")
+            println("Failed to Transfer Player [$name]")
         }
         return false
     }
