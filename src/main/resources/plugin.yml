@@ -1,0 +1,20 @@
+name: $name
+main: me.shadowalzazel.yggdrasil.Yggdrasil
+version: $version
+api-version: $apiVersion
+authors: [ShadowAlzazel]
+description: $description
+
+commands:
+  get_cookie_string:
+    description: "Gets a test cookie string"
+    usage: /<command>
+    permission: op
+  set_cookie_string:
+    description: "Sets a test cookie string"
+    usage: /<command>
+    permission: op
+  transfer_player:
+    description: "Transfers the player to another server"
+    usage: /<command>
+    permission: op
