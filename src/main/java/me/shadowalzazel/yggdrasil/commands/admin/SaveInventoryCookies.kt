@@ -1,6 +1,5 @@
 package me.shadowalzazel.yggdrasil.commands.admin
 
-import me.shadowalzazel.yggdrasil.listeners.LoginManager.saveInventoryToCookies
 import me.shadowalzazel.yggdrasil.player_data.CookiePlayerManager
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor

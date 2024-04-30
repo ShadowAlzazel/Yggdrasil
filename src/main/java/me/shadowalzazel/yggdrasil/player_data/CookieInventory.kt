@@ -60,12 +60,12 @@ class CookieInventory(val player: Player) {
 
     // Create a new map of slots to futures
     fun createCookieMap(slotMap: Map<String, Int> = INVENTORY_SLOTS_INDEX): MutableMap<String, CookieAwait> {
-        val mapSlotAwaits = mutableMapOf<String, CookieAwait>()
+        val mapCookies = mutableMapOf<String, CookieAwait>()
         for (slot in slotMap) {
             val nameKey = NamespacedKey(Yggdrasil.instance, slot.key)
-            mapSlotAwaits[slot.key] = CookieAwait(nameKey, player)
+            mapCookies[slot.key] = CookieAwait(nameKey, player)
         }
-        return mapSlotAwaits
+        return mapCookies
     }
 
 

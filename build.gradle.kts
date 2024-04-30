@@ -5,7 +5,7 @@
  */
 
 group = "me.shadowalzazel"
-version = "0.1-ALPHA-1.20.5"
+version = "0.2-ALPHA-1.20.6"
 description = "Connect with other worlds!"
 
 plugins {
@@ -31,14 +31,14 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.20.5-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1-Beta")
     //api(libs.org.jetbrains.kotlin.kotlin.stdlib.jdk8)
     //api(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
     //api(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
     //testImplementation(libs.org.jetbrains.kotlin.kotlin.test)
     implementation(kotlin("stdlib-jdk8"))
-    paperweight.paperDevBundle("1.20.5-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.20.6-R0.1-SNAPSHOT")
 }
 
 publishing {

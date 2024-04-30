@@ -15,14 +15,29 @@ interface CookiePlayerManager {
         //println("Setting inventory from cookies for [${this.name}]")
     }
 
+    // TODO: Create a tag that disables saving
+
     // Create new snapshot of inventory
     fun Player.saveInventoryToCookies() {
         val cookieInventory = CookieInventory(this)
         for (slot in cookieInventory.INVENTORY_SLOTS_INDEX) {
-            val key = NamespacedKey(Yggdrasil.instance, slot.key)
+            val nameKey = NamespacedKey(Yggdrasil.instance, slot.key)
+            val byteKey = NamespacedKey(Yggdrasil.instance, "${slot.key}_bytes")
             val item = this.inventory.getItem(slot.value) ?: continue
             val nameAsBytes = item.type.name.toByteArray(Charsets.UTF_8)
-            this.storeCookie(key, nameAsBytes)
+            val itemAsBytes = item.serializeAsBytes()
+            /*
+            val metaString = item.itemMeta.asString
+            println("Item: ${item.type.name}")
+            println("B Meta: $metaString")
+            val deserialized = ItemStack.deserializeBytes(itemAsBytes)
+            println("Deserialized: $deserialized")
+            println("D MEta: ${deserialized.itemMeta.asString}")
+            println("Size: ${itemAsBytes.size}")
+             */
+            this.storeCookie(nameKey, nameAsBytes)
+            this.storeCookie(byteKey, itemAsBytes)
+            println("Stored Cookie [${slot.key}] with item [${item.type.name}")
             //println("Stored Cookie: [$key] as byte: $nameAsBytes")
             //println("Stored Cookie: [$key] as name: ${nameAsBytes.toString(Charsets.UTF_8)}")
         }

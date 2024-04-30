@@ -5,6 +5,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.shadowalzazel.yggdrasil.Yggdrasil
+import me.shadowalzazel.yggdrasil.futures.CookieAwait
 import me.shadowalzazel.yggdrasil.player_data.CookieInventory
 import me.shadowalzazel.yggdrasil.player_data.CookiePlayerManager
 import org.bukkit.Material
@@ -35,12 +36,20 @@ class PlayerSynchronizer(val player: Player): CookiePlayerManager {
         val cookieMap = cookieInventory.createCookieMap()
         delay(10L)
         for (slot in cookieMap) {
+            // Get material if not continue
             val outcome = slot.value.getFutureValue()
             val itemName = outcome.toString(Charsets.UTF_8)
-            println("[${slot.key}]: $itemName")
             val material = Material.getMaterial(itemName) ?: continue
-            val item = ItemStack(material)
-            cookieInventory.SLOT_ITEMS[slot.key] = item
+            // Get Material
+            val byteKey = NamespacedKey(Yggdrasil.instance, "${slot.key}_bytes")
+            val itemCookie = CookieAwait(byteKey, player)
+            itemCookie.getFutureValue()
+            val itemOutcome = itemCookie.outcome
+            if (itemOutcome.isEmpty()) continue
+            val deserializedItem = ItemStack.deserializeBytes(itemOutcome)
+            if (deserializedItem.type != material) continue
+            println("[${slot.key}]: $itemName")
+            cookieInventory.SLOT_ITEMS[slot.key] = deserializedItem
         }
     }
 
