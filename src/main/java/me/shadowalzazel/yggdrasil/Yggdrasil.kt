@@ -1,9 +1,12 @@
 package me.shadowalzazel.yggdrasil
 
+import kotlinx.coroutines.DelicateCoroutinesApi
 import me.shadowalzazel.yggdrasil.commands.admin.GetCookieString
+import me.shadowalzazel.yggdrasil.commands.admin.SaveInventoryCookies
 import me.shadowalzazel.yggdrasil.commands.admin.SetCookieString
 import me.shadowalzazel.yggdrasil.commands.admin.TransferPlayer
 import me.shadowalzazel.yggdrasil.listeners.LoginManager
+import me.shadowalzazel.yggdrasil.synchronizers.AsyncManager
 import org.bukkit.plugin.java.JavaPlugin
 
 class Yggdrasil : JavaPlugin() {
@@ -13,10 +16,14 @@ class Yggdrasil : JavaPlugin() {
         lateinit var instance: Yggdrasil
     }
 
+    val asyncManager: AsyncManager
+
     init {
         instance = this
+        asyncManager = AsyncManager()
     }
 
+    @DelicateCoroutinesApi
     override fun onEnable() {
         // Start Timer
         val timerStart: Long = System.currentTimeMillis()
@@ -47,7 +54,8 @@ class Yggdrasil : JavaPlugin() {
         val commandMap = mapOf(
             "get_cookie_string" to GetCookieString,
             "set_cookie_string" to SetCookieString,
-            "transfer_player" to TransferPlayer)
+            "transfer_player" to TransferPlayer,
+            "save_inventory_cookies" to SaveInventoryCookies)
         commandMap.forEach { getCommand(it.key)?.setExecutor(it.value) }
 
         // Hello World!

@@ -1,8 +1,9 @@
 package me.shadowalzazel.yggdrasil.commands.admin
 
 import me.shadowalzazel.yggdrasil.Yggdrasil
-import me.shadowalzazel.yggdrasil.cookies.CookieKeys
-import me.shadowalzazel.yggdrasil.futures.AwaitFuture
+import me.shadowalzazel.yggdrasil.constants.CookieKeys
+import me.shadowalzazel.yggdrasil.futures.CookieAwait
+import me.shadowalzazel.yggdrasil.futures.CookieAwaitTask
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -19,10 +20,21 @@ object GetCookieString : CommandExecutor {
         // Get Args
         val name = args[0]
         if (name != sender.name) return false
-
+        // Key
         val key = CookieKeys.COMMAND_STRING_TEST.key
-        println("Starting fetch of cookie $key")
-        AwaitFuture(key, sender, 3).runTaskLater(Yggdrasil.instance, 20 * 1)
+        println("Starting fetch of cookie [$key]")
+        val cookie = CookieAwait(key, sender)
+        val outcome = cookie.getFutureValue()
+        // If took to long
+        if (cookie.outcome.isEmpty()) {
+            println("Trying Asynchronously...")
+            val awaitTask = CookieAwaitTask(cookie, 3)
+            awaitTask.runTaskTimerAsynchronously(Yggdrasil.instance, 0, 5)
+        }
+        else {
+            println("Outcome List: ${outcome.toList()}")
+            println("Outcome UTF-8: ${outcome.toString(Charsets.UTF_8)}")
+        }
 
         return true
     }
