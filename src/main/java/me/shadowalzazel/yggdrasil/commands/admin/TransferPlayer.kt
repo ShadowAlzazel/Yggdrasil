@@ -1,13 +1,13 @@
 package me.shadowalzazel.yggdrasil.commands.admin
 
-import me.shadowalzazel.yggdrasil.cookies.CookieKeys
+import me.shadowalzazel.yggdrasil.player_data.CookiePlayerManager
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 @Suppress("UnstableApiUsage")
-object TransferPlayer : CommandExecutor {
+object TransferPlayer : CommandExecutor, CookiePlayerManager {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (sender !is Player) return false
@@ -22,6 +22,7 @@ object TransferPlayer : CommandExecutor {
         if (port > 25566) return false
         println("Starting Transfer to server [$host:$port] for [$name]")
         try {
+            sender.saveInventoryToCookies()
             sender.transfer(host, port)
             return true
         }

@@ -1,10 +1,12 @@
 package me.shadowalzazel.yggdrasil
 
+import kotlinx.coroutines.DelicateCoroutinesApi
 import me.shadowalzazel.yggdrasil.commands.admin.GetCookieString
 import me.shadowalzazel.yggdrasil.commands.admin.SaveInventoryCookies
 import me.shadowalzazel.yggdrasil.commands.admin.SetCookieString
 import me.shadowalzazel.yggdrasil.commands.admin.TransferPlayer
 import me.shadowalzazel.yggdrasil.listeners.LoginManager
+import me.shadowalzazel.yggdrasil.synchronizers.AsyncManager
 import org.bukkit.plugin.java.JavaPlugin
 
 class Yggdrasil : JavaPlugin() {
@@ -14,10 +16,14 @@ class Yggdrasil : JavaPlugin() {
         lateinit var instance: Yggdrasil
     }
 
+    val asyncManager: AsyncManager
+
     init {
         instance = this
+        asyncManager = AsyncManager()
     }
 
+    @DelicateCoroutinesApi
     override fun onEnable() {
         // Start Timer
         val timerStart: Long = System.currentTimeMillis()

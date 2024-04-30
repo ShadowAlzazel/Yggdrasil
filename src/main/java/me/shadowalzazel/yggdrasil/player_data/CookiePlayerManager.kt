@@ -5,28 +5,26 @@ import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 
 @Suppress("UnstableApiUsage")
-interface CookieInventoryManager {
+interface CookiePlayerManager {
 
     // TO DO: HANDLE MULTIPLE COOKIES/ CROSSES
-
-    // BY DEFAULT, previous item are deleted!
+    // BY DEFAULT, previous item are replaced!
 
     fun Player.setInventoryFromCookies(inventory: CookieInventory) {
         if (inventory.player != this) return
-
-
+        //println("Setting inventory from cookies for [${this.name}]")
     }
 
     // Create new snapshot of inventory
-    fun saveInventoryToCookies(player: Player) {
-        val cookieInventory = CookieInventory(player)
-        cookieInventory.createFromPlayerInventory()
-        for (slot in cookieInventory.SLOT_MAP_INDEX) {
+    fun Player.saveInventoryToCookies() {
+        val cookieInventory = CookieInventory(this)
+        for (slot in cookieInventory.INVENTORY_SLOTS_INDEX) {
             val key = NamespacedKey(Yggdrasil.instance, slot.key)
-            val item = player.inventory.getItem(slot.value) ?: continue
+            val item = this.inventory.getItem(slot.value) ?: continue
             val nameAsBytes = item.type.name.toByteArray(Charsets.UTF_8)
-            player.storeCookie(key, nameAsBytes)
-            println("Stored Cookie: $key with $nameAsBytes")
+            this.storeCookie(key, nameAsBytes)
+            //println("Stored Cookie: [$key] as byte: $nameAsBytes")
+            //println("Stored Cookie: [$key] as name: ${nameAsBytes.toString(Charsets.UTF_8)}")
         }
 
     }

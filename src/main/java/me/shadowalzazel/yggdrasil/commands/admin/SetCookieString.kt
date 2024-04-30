@@ -1,6 +1,6 @@
 package me.shadowalzazel.yggdrasil.commands.admin
 
-import me.shadowalzazel.yggdrasil.cookies.CookieKeys
+import me.shadowalzazel.yggdrasil.constants.CookieKeys
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender

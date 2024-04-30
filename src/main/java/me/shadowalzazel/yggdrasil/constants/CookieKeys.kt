@@ -1,4 +1,4 @@
-package me.shadowalzazel.yggdrasil.cookies
+package me.shadowalzazel.yggdrasil.constants
 
 import me.shadowalzazel.yggdrasil.Yggdrasil
 import org.bukkit.NamespacedKey

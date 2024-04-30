@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 @Suppress("UnstableApiUsage")
-class CookieAwait(val key: NamespacedKey, val player: Player) {
+class CookieAwait(val key: NamespacedKey, val player: Player, val maxTime: Long = 100L) {
 
     // Set Cookie future
     internal val cookieFuture = player.retrieveCookie(key)
@@ -15,18 +15,18 @@ class CookieAwait(val key: NamespacedKey, val player: Player) {
     fun getFutureValue(): ByteArray {
         // Try to get Future
         val value: ByteArray = try {
-            cookieFuture.get(1000L, TimeUnit.MILLISECONDS)
+            cookieFuture.get(maxTime, TimeUnit.MILLISECONDS)
         }
         catch (except: NullPointerException) {
-            println("Cookie [$key] is Empty!")
+            println("Cookie Await [$key] is Empty!")
             byteArrayOf()
         }
         catch (except: TimeoutException) {
-            println("Cookie [$key] took to long to get!")
+            println("Cookie Await [$key] took to long to get!")
             byteArrayOf()
         }
         if (cookieFuture.isDone) {
-            println("Cookie [$key] fetched! Value: $value")
+            println("Cookie Await [$key] fetched! Value: $value")
             outcome = value
         }
 

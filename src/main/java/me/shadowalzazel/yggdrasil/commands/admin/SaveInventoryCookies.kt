@@ -1,13 +1,14 @@
 package me.shadowalzazel.yggdrasil.commands.admin
 
-import me.shadowalzazel.yggdrasil.player_data.CookieInventoryManager
+import me.shadowalzazel.yggdrasil.listeners.LoginManager.saveInventoryToCookies
+import me.shadowalzazel.yggdrasil.player_data.CookiePlayerManager
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 @Suppress("UnstableApiUsage")
-object SaveInventoryCookies : CommandExecutor, CookieInventoryManager {
+object SaveInventoryCookies : CommandExecutor, CookiePlayerManager {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (sender !is Player) return false
@@ -17,7 +18,7 @@ object SaveInventoryCookies : CommandExecutor, CookieInventoryManager {
         // Get Args
         val name = args[0]
         if (name != sender.name) return false
-        saveInventoryToCookies(sender)
+        sender.saveInventoryToCookies()
         return true
     }
 

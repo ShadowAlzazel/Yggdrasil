@@ -1,9 +1,6 @@
 package me.shadowalzazel.yggdrasil.futures
 
-import org.bukkit.NamespacedKey
-import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
-import java.util.concurrent.CompletableFuture
 
 @Suppress("UnstableApiUsage")
 class CookieAwaitTask(
@@ -24,6 +21,7 @@ class CookieAwaitTask(
         }
         // Cancel if done or add to tries
         if (cookieAwait.cookieFuture.isDone) {
+            println("Cookie [${cookieAwait.key} finished async with byte: ${cookieAwait.outcome}")
             outcome = cookieAwait.outcome
             this.cancel()
             return
